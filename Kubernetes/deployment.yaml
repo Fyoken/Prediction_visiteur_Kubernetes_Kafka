@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-prediction-app
+  namespace: customer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-prediction-app
+  template:
+    metadata:
+      labels:
+        app: customer-prediction-app
+    spec:
+      containers:
+      - name: customer-prediction-app
+        image: fyoken/customer:customer
+        envFrom:
+          - secretRef:
+              name: api-secret
+        ports:
+        - containerPort: 8501
